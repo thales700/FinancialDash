@@ -3,3 +3,4 @@ yfinance
 pandas
 numpy
 git+https://github.com/hmmlearn/hmmlearn
+arch

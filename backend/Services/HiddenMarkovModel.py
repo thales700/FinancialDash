@@ -1,7 +1,6 @@
 import logging
 import pandas as pd
 from services.Quotations import Quotations
-from entities.Granularity import Granularity
 from sklearn.preprocessing import StandardScaler
 from hmmlearn import hmm
 from typing import Union, Tuple
@@ -10,10 +9,7 @@ from schemas.symbol_properties import SymbolProperties
 
 logger = logging.getLogger(__name__)
 
-class HiddenMarkovModel:
-    def __init__(self) -> None:
-        self.quotations_service = Quotations()
-    
+class HiddenMarkovModel:    
     @staticmethod
     def _Features(df: pd.DataFrame) -> Union[pd.DataFrame, str]:
         try:
@@ -108,10 +104,7 @@ class HiddenMarkovModel:
     @staticmethod
     def GetRegimes(symbolInfos: SymbolProperties, n_regimes: int) -> Union[str, pd.DataFrame]:
         try:
-            data = Quotations().Get(symbolInfos.symbol,
-                                    symbolInfos.start_date,
-                                    symbolInfos.end_date,
-                                    symbolInfos.granularity)
+            data = Quotations().Get(symbolInfos)
             if isinstance(data, str):
                 return data
 
