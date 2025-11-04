@@ -1,7 +1,8 @@
 import datetime
 import yfinance as yf
 import pandas as pd
-from Symbols import Symbols
+from Entities.Symbols import Symbols
+from Entities.Granularity import Granularity
 from typing import Union, Optional
 import logging
 
@@ -22,7 +23,7 @@ class Quotations:
             logger.error(f"Date format error: {date} is not in YYYY-MM-DD format.")
             return False
         
-    def Get(self, symbol: str, start_date: str, end_date: str) -> Union[pd.DataFrame, str]:
+    def Get(self, symbol: str, start_date: str, end_date: str, granularity: Granularity) -> Union[pd.DataFrame, str]:
         try:
             if not self._VerifySymbol(symbol):
                 return "No such symbol"
@@ -32,7 +33,7 @@ class Quotations:
 
             else:
                 ticker = yf.Ticker(symbol)
-                data = ticker.history(start=start_date, end=end_date)
+                data = ticker.history(start=start_date, end=end_date, interval=granularity)
                 df = pd.DataFrame(data)
                 logger.info(f"Successfully retrieved data for {symbol} from {start_date} to {end_date}")
                 return df
@@ -40,4 +41,3 @@ class Quotations:
         except Exception as e:
             logger.error(f"Error retrieving data for {symbol} from {start_date} to {end_date}: {e}")
             return str(e)
-

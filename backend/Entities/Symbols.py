@@ -6,3 +6,6 @@ class Symbols(Enum):
     GOOGL = "GOOGL"
     AMZN = "AMZN"
     TSLA = "TSLA"
+
+    def __str__(self):
+        return self.value
