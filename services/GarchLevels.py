@@ -100,8 +100,8 @@ class GarchLevels:
                 col_neg = f'volatility_level_-{level}'
                 df[col_pos] = df['Close'] * (1 + level*df['volatility'])
                 df[col_neg] = df['Close'] * (1 - level*df['volatility'])
-                df[col_pos].at[-1] = df['Open'].iloc[-1] * (1 + level*df['volatility'].iloc[-1])
-                df[col_neg].at[-1] = df['Open'].iloc[-1] * (1 - level*df['volatility'].iloc[-1])
+                df.loc[df.index[-1], col_pos] = df['Open'].iloc[-1] * (1 + level*df['volatility'].iloc[-1])
+                df.loc[df.index[-1], col_neg] = df['Open'].iloc[-1] * (1 - level*df['volatility'].iloc[-1])
             
             df.index = df['Date'] #type: ignore
             logger.info(f"Calculated {levels} volatility levels successfully.")
